@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    // Singleton instance
+    public static PlayerController Instance { get; private set; }
+
     private float horizontal;
     public float moveDistance = 8f;
     public float jumpingPower = 16f;
@@ -12,6 +15,19 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
+
+    void Awake()
+    {
+        // Singleton implementation
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
 
     void Update()
     {
@@ -28,7 +44,6 @@ public class PlayerController : MonoBehaviour
         }
 
         Flip();
-
     }
 
     private void FixedUpdate()
