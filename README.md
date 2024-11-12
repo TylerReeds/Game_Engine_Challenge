@@ -1,2 +1,14 @@
 # Game_Engine_Challenge
  
+Donkey Kong Jr Deliverable Explanation
+
+Explanation:
+As for our implementation for the deliverable, we’ve decided to create a simple Singleton Design Pattern that handles the player’s inputs as it is more an easier design pattern implemented for a low-fidelity copy of the game. The premise of the game handles player movement and jumping, while also adjusting the values of the movement speed on the player. Our iteration of it was used to adjust the value of the player’s move distance based on the button that’s pressed when running, the values were initialized within the .csv file and changed based on the values that were set.
+
+
+Challenges:
+Some of the challenges that we had faced was being more familiar with the provided plugin example that was gone over in class. We had to find different ways of implementing our own iteration of the plugin that works well within a 2D-platformer. Another challenge was with the movement system, at first we did a way harder way of doing the player movement controller so we had to redo this and make it simpler, this wasted a lot of time. If we went simple off the bat, we would have finished this in time. 
+
+Contributions:
+Tyler Reeds - Program Implementations & Explanations (50% Contribution)
+Shariq Ravikumar - Program implementations & Explanations (50% Contribution)
