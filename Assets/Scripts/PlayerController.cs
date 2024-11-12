@@ -1,75 +1,55 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Input;
-using Unity.IO.LowLevel.Unsafe;
-using UnityEditor;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public Keybindings keybinds;
-    private float moveDistance = 1.5f;
+    private float horizontal;
+    public float moveDistance = 8f;
+    public float jumpingPower = 16f;
+    private bool isFacingRight = true;
 
-    private Stack<ICommand> previousInputs = new Stack<ICommand>();
-    private ICommand inputToRedo;
-    private InputManager inputManager;
+    [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private LayerMask groundLayer;
 
-    void Start()
-    {
-        inputManager = InputManager.Instance;
-
-        inputManager.SetCommand("Up", new MoveUpCommand(this));
-        inputManager.SetCommand("Down", new MoveDownCommand(this));
-        inputManager.SetCommand("Left", new MoveLeftCommand(this));
-        inputManager.SetCommand("Right", new MoveRightCommand(this));
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        if (transform.position.x > -15.0f)
+        horizontal = Input.GetAxisRaw("Horizontal");
+
+        if (Input.GetButtonDown("Jump") && IsGrounded())
         {
-            inputManager.HandleInput("Left");
+            rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
         }
 
-        if (transform.position.x < 15.0f)
+        if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
         {
-            inputManager.HandleInput("Right");
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
         }
 
-        if (transform.position.y > -20.0f)
-        {
-            inputManager.HandleInput("Down");
-        }
+        Flip();
 
-        if (transform.position.y < 20.0f)
-        {
-            inputManager.HandleInput("Up");
-        }
-    }
-    IEnumerator Delay()
-    {
-        yield return new WaitForSeconds(2);
-        GameObject.Destroy(gameObject);
-        //EditorApplication.ExitPlaymode();
-        Application.Quit();
     }
 
-    public void MoveUp()
+    private void FixedUpdate()
     {
-        transform.position += new Vector3(0, moveDistance, 0);
+        rb.velocity = new Vector2(horizontal * moveDistance, rb.velocity.y);
     }
-    public void MoveDown()
+
+    private bool IsGrounded()
     {
-        transform.position -= new Vector3(0, moveDistance, 0);
+        Debug.Log("HitGround");
+        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
     }
-    public void MoveLeft()
+
+    private void Flip()
     {
-        transform.position -= new Vector3(moveDistance, 0, 0);
-    }
-    public void MoveRight()
-    {
-        transform.position += new Vector3(moveDistance, 0, 0);
+        if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
+        {
+            isFacingRight = !isFacingRight;
+            Vector3 localScale = transform.localScale;
+            localScale.x *= -1f;
+            transform.localScale = localScale;
+        }
     }
 }
