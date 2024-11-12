@@ -15,6 +15,7 @@ Challenges:
 One of the challenges that we faced was being more familiar with the provided plugin example that was gone over in class. We had to find different ways of implementing our own iteration of the plugin that works well within a 2D platformer. Another challenge was with the movement system, at first we did a way harder way of doing the player movement controller so we had to redo this and make it simpler, this wasted a lot of time. If we had gone simple off the bat, we would have finished this in time. 
 
 Diagram of implementation:
+
 ![Singleton for playercontroller game engine challenge drawio](https://github.com/user-attachments/assets/1aeb9b0f-af69-4e26-a510-a3ac2ab23806)
 
 
