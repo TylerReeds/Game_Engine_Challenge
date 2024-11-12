@@ -1,4 +1,7 @@
 # Game_Engine_Challenge
+
+Shariq Ravikumar - 100752332
+Tyler Reeds - 100870679
  
 Donkey Kong Jr Deliverable Explanation
 
